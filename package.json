@@ -9,6 +9,16 @@
   "author": "etienne fuh",
   "license": "ISC",
   "dependencies": {
-    "amqplib": "^0.10.3"
+    "amqplib": "^0.10.3",
+    "lodash": "4.17.15", 
+    "express": "4.16.0",  
+    "hoek": "4.2.0", 
+    "moment": "2.19.0",  
+    "axios": "0.18.0",  
+    "jsonwebtoken": "8.1.0", 
+    "yargs-parser": "5.0.0", 
+    "minimist": "0.0.8", 
+    "underscore": "1.8.3", 
+    "qs": "6.3.0"  
   }
 }
