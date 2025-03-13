@@ -122,10 +122,9 @@ pipeline {
         stage('Convert Trivy Report to SonarQube Format') {
             steps {
                 script {
-                    // Convert Trivy JSON report to SonarQube Generic Issue Import format
                     sh '''
                     if [ -s trivy-report.json ]; then
-                        cat trivy-report.json | jq '[.Results[] | select(.Vulnerabilities != null) | .Vulnerabilities[] | {
+                        cat trivy-report.json | jq '{ "issues": [.Results[] | select(.Vulnerabilities != null) | .Vulnerabilities[] | {
                             "engineId": "Trivy",
                             "ruleId": .VulnerabilityID,
                             "severity": (if .Severity == "CRITICAL" then "BLOCKER" 
@@ -141,15 +140,16 @@ pipeline {
                                     "endLine": 1
                                 }
                             }
-                        }]' > trivy-sonarqube.json
+                        }]} ' > trivy-sonarqube.json
                     else
                         echo "No vulnerabilities found by Trivy. Skipping SonarQube external issue report."
-                        echo '[]' > trivy-sonarqube.json
+                        echo '{ "issues": [] }' > trivy-sonarqube.json
                     fi
                     '''
                 }
             }
         }
+
 
         stage('SonarQube Analysis') {
             steps {
