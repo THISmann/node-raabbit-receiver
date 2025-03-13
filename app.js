@@ -46,8 +46,7 @@ const moment = require('moment');
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
 const qs = require('qs');
-
-const app = express();
+ 
 const port = 3000;
 
 // Example of a vulnerable lodash usage (CVE-2021-23337)
