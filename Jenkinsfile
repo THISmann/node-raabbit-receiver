@@ -81,7 +81,6 @@
 // }
 
 
-
 pipeline {
     agent any
     tools {
@@ -128,7 +127,7 @@ pipeline {
                     cat trivy-report.json | jq '[.Results[] | select(.Vulnerabilities != null) | .Vulnerabilities[] | {
                         "engineId": "Trivy",
                         "ruleId": .VulnerabilityID,
-                        "severity": (if .Severity == "CRITICAL" then "BLOCKER" else .Severity end),
+                        "severity": (if .Severity == "CRITICAL" then "BLOCKER" elif .Severity == "HIGH" then "MAJOR" elif .Severity == "MEDIUM" then "MINOR" else "INFO" end),
                         "type": "VULNERABILITY",
                         "primaryLocation": {
                             "message": .Description,
